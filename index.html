@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2035 Virtual Reunion: Role-Play Challenge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Futuristic Neon -->
+    <!-- Application Structure Plan: The SPA is a game-like interactive tool for a classroom role-play. The information architecture is designed as a "mission control" dashboard for the teacher. It's structured sequentially: 1. Instructions, 2. A "Group Preparation Guide", 3. Role Assignment, 4. Performance Stage with a challenge question generator, and 5. A voting gallery. This top-to-bottom flow guides the teacher through setting up and running the activity. The voting gallery was updated to include clear criteria, making the peer-evaluation process more structured. -->
+    <!-- Visualization & Content Choices: 
+        1. Role Assignment: Report Info (3 role cards) -> Goal (Distribute roles) -> Viz/Presentation Method (Interactive "Secret Role" cards) -> Interaction (Teacher clicks to assign a role to a group, which is then revealed) -> Justification (This adds an element of surprise and makes the role assignment feel more like part of the game) -> Library/Method (HTML/CSS/JS).
+        2. Group Guide: Report Info (Clarification on group performance) -> Goal (Instruct/Guide) -> Viz/Presentation Method (A dedicated card with clear examples) -> Interaction (None) -> Justification (Directly addresses a point of potential confusion for students, making the activity smoother) -> Library/Method (HTML/CSS/Tailwind).
+        3. Challenge Question: Report Info (Students open themselves to a question) -> Goal (Provide a mid-performance challenge) -> Viz/Presentation Method (A "Challenge" button and a display area) -> Interaction (Clicking the button randomly selects and displays a question from a predefined list) -> Justification (This implements the user's request for an interactive question-reveal mechanism and now includes a peer-questioning instruction) -> Library/Method (HTML/CSS/JS).
+        4. Voting System: Report Info (Class votes for best performer) -> Goal (Peer evaluation/Gamification) -> Viz/Presentation Method (A dynamic gallery of group cards with vote buttons and added criteria) -> Interaction (Teacher adds groups; students vote by clicking) -> Justification (Adding explicit criteria makes the voting process a more effective learning tool for both performers and voters) -> Library/Method (HTML/CSS/JS).
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+        }
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .neon-text {
+            color: #2dd4bf;
+            text-shadow: 0 0 5px #2dd4bf, 0 0 10px #2dd4bf;
+        }
+        .card {
+            background-color: rgba(31, 41, 55, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-primary {
+            background-color: #2dd4bf;
+            color: #111827;
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: #5eead4;
+            box-shadow: 0 0 15px #2dd4bf;
+        }
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+<body class="text-gray-200">
+
+    <div class="container mx-auto px-4 py-8 md:py-12">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-6xl font-bold text-white">2035 Virtual Reunion</h1>
+            <p class="mt-3 text-lg text-gray-400 max-w-2xl mx-auto">An interactive role-play challenge to practice future tenses.</p>
+        </header>
+
+        <main class="space-y-12">
+            <!-- Instructions -->
+            <section class="card p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 neon-text">Your Mission</h2>
+                <p><strong>Scenario:</strong> It is 2035 and you are meeting your college friends at a virtual reunion. You haven't connected since graduation. </p>
+                <p class="mt-2"><strong>Goal:</strong> Each member of your group must use at least **one different future tense** with ‘will’ during your conversation. Introduce yourselves based on your new role. Then, discuss what you think you will have achieved or will be doing in the next 10 years (by 2045).</p>
+            </section>
+            
+            <!-- Group Preparation Guide -->
+            <section class="card p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 neon-text">How to Perform as a Group (Groups of 3)</h2>
+                <div class="space-y-4 text-gray-300">
+                    <p>Your group of three shares **one secret identity**. You are partners in the same profession.</p>
+                    <div>
+                        <h3 class="font-semibold text-teal-300">Preparation Steps:</h3>
+                        <ol class="list-decimal list-inside ml-4">
+                            <li><strong>Discuss Your Story:</strong> How do you work together? Did you start a company? What is your company's name?</li>
+                            <li><strong>Assign Roles:</strong> Each person must choose one of the following roles for the performance.</li>
+                            <li><strong>Plan Your Performance:</strong> Decide who will say what. Each person must use a different future tense!</li>
+                            <li><strong>Prepare for Questions:</strong> Be ready to answer a random question from the screen AND a follow-up question from another group after your performance.</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-teal-300">Performance Roles & Examples:</h3>
+                        <div class="mt-2 p-4 bg-gray-900 rounded-lg space-y-3">
+                            <p><strong>Student 1: The Visionary</strong> (Focus on big dreams & long-term goals)</p>
+                            <p class="italic text-sm">"I believe our company **will be** the biggest in the world. By 2045, we **will have been changing** the industry for over 20 years!"</p>
+                        </div>
+                        <div class="mt-2 p-4 bg-gray-900 rounded-lg space-y-3">
+                             <p><strong>Student 2: The Planner</strong> (Focus on completed actions & deadlines)</p>
+                            <p class="italic text-sm">"That's right. And according to my schedule, by the end of next year, we **will have opened** our new office in Tokyo."</p>
+                        </div>
+                        <div class="mt-2 p-4 bg-gray-900 rounded-lg space-y-3">
+                             <p><strong>Student 3: The Realist</strong> (Focus on actions in progress)</p>
+                            <p class="italic text-sm">"And while they plan, I **will be managing** the day-to-day operations. This time next month, I **will be hiring** our new team of engineers."</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Role Assignment -->
+            <section class="card p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 neon-text">1. Assign Roles</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="role-assignment-grid">
+                    <!-- Role assignment buttons will be generated here -->
+                </div>
+            </section>
+
+            <!-- Performance Stage -->
+            <section class="card p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 neon-text">2. Performance Stage</h2>
+                <div class="text-center">
+                    <p class="mb-4">During their performance, the performing group can click the button below to receive a random challenge question. After they finish, one student from another group can also ask them a follow-up challenge question!</p>
+                    <button id="challenge-btn" class="btn-primary font-bold py-3 px-8 rounded-full text-lg">Get a Challenge Question!</button>
+                    <div id="challenge-question-display" class="mt-6 p-4 bg-gray-900 rounded-lg text-xl h-24 flex items-center justify-center text-center" style="display: none;"></div>
+                </div>
+            </section>
+
+            <!-- Voting Gallery -->
+            <section class="card p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 neon-text">3. Voting Gallery</h2>
+                <div class="bg-gray-900 p-4 rounded-lg mb-6">
+                    <h3 class="font-semibold text-teal-300 text-lg mb-2">Voting Criteria</h3>
+                    <p class="text-sm text-gray-400">As you watch each group, consider these points before you vote:</p>
+                    <ul class="list-disc list-inside ml-4 mt-2 text-sm space-y-1">
+                        <li><strong>Correct Grammar:</strong> Did the group use the future tenses correctly?</li>
+                        <li><strong>Variety of Tenses:</strong> Did each member use a *different* future tense?</li>
+                        <li><strong>Creativity & Performance:</strong> Was their story creative and their performance engaging?</li>
+                        <li><strong>Fluency:</strong> Did they speak fluently and confidently?</li>
+                    </ul>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                    <input type="text" id="group-name-input" placeholder="Enter performing group's name..." class="w-full bg-gray-700 text-white px-4 py-2 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-400">
+                    <button id="add-group-btn" class="btn-primary font-bold py-2 px-6 rounded-lg whitespace-nowrap">Add Group to Gallery</button>
+                </div>
+                <div id="voting-gallery" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Group cards for voting will appear here -->
+                </div>
+                 <div class="mt-6 text-center">
+                    <button id="show-results-btn" class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 px-8 rounded-full text-lg">Show Results</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="role-modal" class="fixed inset-0 modal-backdrop flex items-center justify-center p-4" style="display: none;">
+        <div class="card max-w-md w-full p-8 rounded-2xl relative">
+            <h3 id="role-title" class="text-2xl font-bold neon-text mb-4"></h3>
+            <p id="role-description" class="text-gray-300"></p>
+            <button id="close-role-modal" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-white">&times;</button>
+        </div>
+    </div>
+    <div id="results-modal" class="fixed inset-0 modal-backdrop flex items-center justify-center p-4" style="display: none;">
+        <div class="card max-w-md w-full p-8 rounded-2xl relative text-center">
+            <h2 class="text-3xl font-bold neon-text mb-4">🏆 Results 🏆</h2>
+            <div id="results-content"></div>
+            <button id="close-results-modal" class="mt-6 btn-primary font-bold py-2 px-6 rounded-lg">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const roles = [
+            { title: "Social Media Influencer", description: "You create videos and content online and have millions of followers. You live in New York and love traveling." },
+            { title: "Game Developer", description: "You design characters and stories for a famous video game company. You live in Los Angeles and are starting your own game studio." },
+            { title: "Robotics Technician", description: "You build and repair robots used in everyday life. You work in a big city like Chicago and live with your family." },
+            { title: "Virtual Reality Architect", description: "You design entire virtual worlds for work and entertainment. You live in a high-tech eco-city." },
+            { title: "AI Ethics Consultant", description: "You work with big companies to ensure their artificial intelligence systems are fair and safe for society. You travel the world for conferences." }
+        ];
+
+        const challengeQuestions = [
+            "Looking back from 2045, what is one major project you **will have completed** that you are most proud of?",
+            "In the next 10 years, what new skill **will you be learning** to stay relevant in your field?",
+            "By 2045, how many years **will you have been working** in your profession?",
+            "What is a personal goal (not career-related) that you **will have achieved** by 2045?",
+            "What do you predict **will be** the biggest change in your industry in the next decade?"
+        ];
+
+        let groups = [];
+        const maxGroups = 8;
+
+        const roleAssignmentGrid = document.getElementById('role-assignment-grid');
+        const roleModal = document.getElementById('role-modal');
+        const roleTitle = document.getElementById('role-title');
+        const roleDescription = document.getElementById('role-description');
+        const closeRoleModalBtn = document.getElementById('close-role-modal');
+        
+        const challengeBtn = document.getElementById('challenge-btn');
+        const challengeDisplay = document.getElementById('challenge-question-display');
+
+        const addGroupBtn = document.getElementById('add-group-btn');
+        const groupNameInput = document.getElementById('group-name-input');
+        const votingGallery = document.getElementById('voting-gallery');
+        
+        const showResultsBtn = document.getElementById('show-results-btn');
+        const resultsModal = document.getElementById('results-modal');
+        const resultsContent = document.getElementById('results-content');
+        const closeResultsModalBtn = document.getElementById('close-results-modal');
+
+        // Populate Role Assignment Buttons
+        for(let i = 1; i <= maxGroups; i++) {
+            const btn = document.createElement('button');
+            btn.className = 'btn-primary font-bold py-4 rounded-lg';
+            btn.textContent = `Assign Role: Group ${i}`;
+            btn.onclick = () => assignRole(i);
+            roleAssignmentGrid.appendChild(btn);
+        }
+
+        function assignRole(groupNum) {
+            const randomRole = roles[Math.floor(Math.random() * roles.length)];
+            roleTitle.textContent = `Group ${groupNum}: ${randomRole.title}`;
+            roleDescription.textContent = randomRole.description;
+            roleModal.style.display = 'flex';
+        }
+
+        closeRoleModalBtn.addEventListener('click', () => roleModal.style.display = 'none');
+
+        // Challenge Question Logic
+        challengeBtn.addEventListener('click', () => {
+            const randomQuestion = challengeQuestions[Math.floor(Math.random() * challengeQuestions.length)];
+            challengeDisplay.innerHTML = randomQuestion; // Use innerHTML to render bold tags
+            challengeDisplay.style.display = 'flex';
+        });
+
+        // Add Group to Gallery Logic
+        addGroupBtn.addEventListener('click', () => {
+            const groupName = groupNameInput.value.trim();
+            if (groupName && !groups.find(g => g.name === groupName)) {
+                groups.push({ name: groupName, votes: 0 });
+                groupNameInput.value = '';
+                renderVotingGallery();
+            }
+        });
+
+        function renderVotingGallery() {
+            votingGallery.innerHTML = '';
+            groups.forEach((group, index) => {
+                const card = document.createElement('div');
+                card.className = 'card p-4 rounded-lg';
+                card.innerHTML = `
+                    <h3 class="text-xl font-bold">${group.name}</h3>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-lg font-bold">${group.votes} Votes</span>
+                        <button class="btn-primary font-semibold py-1 px-4 rounded-full" onclick="voteForGroup(${index})">Vote</button>
+                    </div>
+                `;
+                votingGallery.appendChild(card);
+            });
+        }
+
+        function voteForGroup(index) {
+            groups[index].votes++;
+            renderVotingGallery();
+        }
+
+        // Results Modal Logic
+        showResultsBtn.addEventListener('click', () => {
+            if (groups.length === 0) return;
+            const winner = groups.reduce((prev, current) => (prev.votes > current.votes) ? prev : current);
+            resultsContent.innerHTML = `<p class="text-xl">The winner is...</p><p class="text-4xl font-bold my-4 neon-text">${winner.name}</p><p class="text-xl">with ${winner.votes} votes!</p>`;
+            resultsModal.style.display = 'flex';
+        });
+        
+        closeResultsModalBtn.addEventListener('click', () => resultsModal.style.display = 'none');
+
+    </script>
+
+</body>
+</html>
+
