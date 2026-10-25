@@ -1,268 +1,80 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2035 Virtual Reunion: Role-Play Challenge</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Futuristic Neon -->
-    <!-- Application Structure Plan: The SPA is a game-like interactive tool for a classroom role-play. The information architecture is designed as a "mission control" dashboard for the teacher. It's structured sequentially: 1. Instructions, 2. A "Group Preparation Guide", 3. Role Assignment, 4. Performance Stage with a challenge question generator, and 5. A voting gallery. This top-to-bottom flow guides the teacher through setting up and running the activity. The voting gallery was updated to include clear criteria, making the peer-evaluation process more structured. -->
-    <!-- Visualization & Content Choices: 
-        1. Role Assignment: Report Info (3 role cards) -> Goal (Distribute roles) -> Viz/Presentation Method (Interactive "Secret Role" cards) -> Interaction (Teacher clicks to assign a role to a group, which is then revealed) -> Justification (This adds an element of surprise and makes the role assignment feel more like part of the game) -> Library/Method (HTML/CSS/JS).
-        2. Group Guide: Report Info (Clarification on group performance) -> Goal (Instruct/Guide) -> Viz/Presentation Method (A dedicated card with clear examples) -> Interaction (None) -> Justification (Directly addresses a point of potential confusion for students, making the activity smoother) -> Library/Method (HTML/CSS/Tailwind).
-        3. Challenge Question: Report Info (Students open themselves to a question) -> Goal (Provide a mid-performance challenge) -> Viz/Presentation Method (A "Challenge" button and a display area) -> Interaction (Clicking the button randomly selects and displays a question from a predefined list) -> Justification (This implements the user's request for an interactive question-reveal mechanism and now includes a peer-questioning instruction) -> Library/Method (HTML/CSS/JS).
-        4. Voting System: Report Info (Class votes for best performer) -> Goal (Peer evaluation/Gamification) -> Viz/Presentation Method (A dynamic gallery of group cards with vote buttons and added criteria) -> Interaction (Teacher adds groups; students vote by clicking) -> Justification (Adding explicit criteria makes the voting process a more effective learning tool for both performers and voters) -> Library/Method (HTML/CSS/JS).
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #111827;
-        }
-        h1, h2, h3 {
-            font-family: 'Orbitron', sans-serif;
-        }
-        .neon-text {
-            color: #2dd4bf;
-            text-shadow: 0 0 5px #2dd4bf, 0 0 10px #2dd4bf;
-        }
-        .card {
-            background-color: rgba(31, 41, 55, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .btn-primary {
-            background-color: #2dd4bf;
-            color: #111827;
-            transition: all 0.2s ease-in-out;
-        }
-        .btn-primary:hover {
-            background-color: #5eead4;
-            box-shadow: 0 0 15px #2dd4bf;
-        }
-        .modal-backdrop {
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101825">
+  <meta name="description" content="Eight future careers, 24 project ideas and a reunion in 2035. A speaking challenge for groups of three practising future tenses.">
+  <title>2035 Virtual Reunion · Future Tenses Role-Play</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="projects.js" defer></script>
+  <script src="app.js" defer></script>
 </head>
-<body class="text-gray-200">
+<body>
+  <a class="skip-link" href="#mission">Skip to the activity</a>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">35</span><span>REUNION LAB<span class="brand-sub">UNIT 2 · FUTURE TENSES</span></span></a>
+    <nav aria-label="Activity sections"><a href="#mission">The mission</a><a href="#groups">Group briefs</a><a href="#performance">Perform</a><a href="#voting">Vote</a></nav>
+    <span class="story-year">STORY YEAR <b>2035</b></span>
+  </header>
+  <main class="shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot"></span> YOUR NEXT CHAPTER STARTS HERE</p>
+        <h1 id="hero-title">Old friends.<br>New worlds.<br><span>Big future plans.</span></h1>
+        <p class="hero-intro">It’s 2035. Your college friends are meeting again. You’ve built something together. What comes next?</p>
+        <div class="hero-actions"><a class="button primary" href="#groups">Open your group brief <span aria-hidden="true">↗</span></a><a class="text-link" href="#prepare">How to prepare <span aria-hidden="true">↓</span></a></div>
+        <div class="hero-stats"><span><b>8</b> career worlds</span><span><b>24</b> project ideas</span><span><b>3</b> voices per team</span></div>
+      </div>
+      <div class="hero-visual">
+        <div class="photo hero-photo sheet-1" style="--col:1;--row:1" role="img" aria-label="Virtual reality designers testing a new immersive experience."></div>
+        <div class="hero-image-label"><span class="tiny-label">A GLIMPSE OF YOUR FUTURE</span><strong>Make your next ten years a story.</strong><span>From a first idea in 2032 to a bigger impact by 2045.</span></div>
+        <span class="floating-tag">2035 → 2045</span>
+      </div>
+    </section>
 
-    <div class="container mx-auto px-4 py-8 md:py-12">
-        <header class="text-center mb-10">
-            <h1 class="text-4xl md:text-6xl font-bold text-white">2035 Virtual Reunion</h1>
-            <p class="mt-3 text-lg text-gray-400 max-w-2xl mx-auto">An interactive role-play challenge to practice future tenses.</p>
-        </header>
+    <section class="mission panel" id="mission" aria-labelledby="mission-title">
+      <div><p class="eyebrow">THE MISSION</p><h2 id="mission-title">One team. One shared story.</h2></div>
+      <div><p>Your group of three shares <strong>one profession and one project</strong>. You are partners, not three unrelated characters. Your project started in <strong>2032</strong>. At your reunion in <strong>2035</strong>, discuss your plans for the next ten years, up to <strong>2045</strong>.</p><p>Every member contributes, uses a different target form and responds to someone else. Finish with a challenge question from the screen and one follow-up question from another group.</p></div>
+    </section>
 
-        <main class="space-y-12">
-            <!-- Instructions -->
-            <section class="card p-6 rounded-xl shadow-lg">
-                <h2 class="text-2xl font-bold mb-4 neon-text">Your Mission</h2>
-                <p><strong>Scenario:</strong> It is 2035 and you are meeting your college friends at a virtual reunion. You haven't connected since graduation. </p>
-                <p class="mt-2"><strong>Goal:</strong> Each member of your group must use at least **one different future tense** with ‘will’ during your conversation. Introduce yourselves based on your new role. Then, discuss what you think you will have achieved or will be doing in the next 10 years (by 2045).</p>
-            </section>
-            
-            <!-- Group Preparation Guide -->
-            <section class="card p-6 rounded-xl shadow-lg">
-                <h2 class="text-2xl font-bold mb-4 neon-text">How to Perform as a Group (Groups of 3)</h2>
-                <div class="space-y-4 text-gray-300">
-                    <p>Your group of three shares **one secret identity**. You are partners in the same profession.</p>
-                    <div>
-                        <h3 class="font-semibold text-teal-300">Preparation Steps:</h3>
-                        <ol class="list-decimal list-inside ml-4">
-                            <li><strong>Discuss Your Story:</strong> How do you work together? Did you start a company? What is your company's name?</li>
-                            <li><strong>Assign Roles:</strong> Each person must choose one of the following roles for the performance.</li>
-                            <li><strong>Plan Your Performance:</strong> Decide who will say what. Each person must use a different future tense!</li>
-                            <li><strong>Prepare for Questions:</strong> Be ready to answer a random question from the screen AND a follow-up question from another group after your performance.</li>
-                        </ol>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-teal-300">Performance Roles & Examples:</h3>
-                        <div class="mt-2 p-4 bg-gray-900 rounded-lg space-y-3">
-                            <p><strong>Student 1: The Visionary</strong> (Focus on big dreams & long-term goals)</p>
-                            <p class="italic text-sm">"I believe our company **will be** the biggest in the world. By 2045, we **will have been changing** the industry for over 20 years!"</p>
-                        </div>
-                        <div class="mt-2 p-4 bg-gray-900 rounded-lg space-y-3">
-                             <p><strong>Student 2: The Planner</strong> (Focus on completed actions & deadlines)</p>
-                            <p class="italic text-sm">"That's right. And according to my schedule, by the end of next year, we **will have opened** our new office in Tokyo."</p>
-                        </div>
-                        <div class="mt-2 p-4 bg-gray-900 rounded-lg space-y-3">
-                             <p><strong>Student 3: The Realist</strong> (Focus on actions in progress)</p>
-                            <p class="italic text-sm">"And while they plan, I **will be managing** the day-to-day operations. This time next month, I **will be hiring** our new team of engineers."</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    <section class="prepare" id="prepare" aria-labelledby="prepare-title">
+      <div class="section-heading"><div><p class="eyebrow">BEFORE YOU TAKE THE FLOOR</p><h2 id="prepare-title">Build a conversation, together.</h2></div><span class="section-note">Groups of 3</span></div>
+      <div class="steps"><article><span class="step-number">01</span><h3>Open your brief</h3><p>Reveal your group’s profession. Read the three project directions and choose one.</p></article><article><span class="step-number">02</span><h3>Make it yours</h3><p>Name your team. Decide who you help, how you earn or raise money and what success will look like.</p></article><article><span class="step-number">03</span><h3>Share the speaking</h3><p>Choose the three performance roles below. Plan a conversation, then rehearse and ask each other questions.</p></article></div>
+      <div class="speaker-grid">
+        <article class="speaker-card duration"><span class="speaker-icon" aria-hidden="true">01</span><p class="tiny-label">THE VISIONARY</p><h3>Experience & growth</h3><p>Explain how long your team will have been working towards its goal by 2045.</p><div class="form">will have been + V-ing</div><p class="frame">“By 2045, we’ll have been … for thirteen years.”</p></article>
+        <article class="speaker-card result"><span class="speaker-icon" aria-hidden="true">02</span><p class="tiny-label">THE PLANNER</p><h3>Results & deadlines</h3><p>Describe a clear achievement your team will have completed by a future deadline.</p><div class="form">will have + V3</div><p class="frame">“By 2045, we’ll have …”</p></article>
+        <article class="speaker-card progress"><span class="speaker-icon" aria-hidden="true">03</span><p class="tiny-label">THE REALIST</p><h3>Work in progress</h3><p>Describe what your team will be doing at a particular future time.</p><div class="form">will be + V-ing</div><p class="frame">“At ten next Monday, we’ll be …”</p></article>
+      </div>
+      <p class="form-note">V3 = past participle, as in <em>built</em>, <em>created</em> and <em>opened</em>. The story is in 2035: 2032 → 2045 is thirteen years.</p>
+    </section>
 
-            <!-- Role Assignment -->
-            <section class="card p-6 rounded-xl shadow-lg">
-                <h2 class="text-2xl font-bold mb-4 neon-text">1. Assign Roles</h2>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="role-assignment-grid">
-                    <!-- Role assignment buttons will be generated here -->
-                </div>
-            </section>
+    <section id="groups" aria-labelledby="groups-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / THE GROUP BRIEFS</p><h2 id="groups-title">Find your future.</h2><p id="assignment-note">Reveal a group once. Reopening it keeps the same role and project, even after a refresh.</p></div><button class="button secondary small" id="reset-btn">Start a new class</button></div>
+      <div class="assignment-meta"><span class="saved-status"><span class="status-dot"></span><span id="save-status">Saved on this device</span></span><span id="assigned-count" aria-live="polite">0 of 8 groups revealed</span></div>
+      <div class="group-grid" id="role-assignment-grid"></div>
+    </section>
 
-            <!-- Performance Stage -->
-            <section class="card p-6 rounded-xl shadow-lg">
-                <h2 class="text-2xl font-bold mb-4 neon-text">2. Performance Stage</h2>
-                <div class="text-center">
-                    <p class="mb-4">During their performance, the performing group can click the button below to receive a random challenge question. After they finish, one student from another group can also ask them a follow-up challenge question!</p>
-                    <button id="challenge-btn" class="btn-primary font-bold py-3 px-8 rounded-full text-lg">Get a Challenge Question!</button>
-                    <div id="challenge-question-display" class="mt-6 p-4 bg-gray-900 rounded-lg text-xl h-24 flex items-center justify-center text-center" style="display: none;"></div>
-                </div>
-            </section>
+    <section class="performance panel" id="performance" aria-labelledby="performance-title">
+      <div><p class="eyebrow">02 / THE PERFORMANCE STAGE</p><h2 id="performance-title">Think on your feet.</h2><p>Introduce your team, connect your future plans and respond to each other. Then reveal a challenge. Another group asks one follow-up question after your performance.</p><button class="button primary" id="challenge-btn">Reveal a challenge <span aria-hidden="true">↗</span></button></div>
+      <div class="challenge-card"><span class="tiny-label" id="challenge-label">YOUR NEXT QUESTION</span><p id="challenge-question-display" aria-live="polite">Ready for a question you haven’t rehearsed?</p><span class="challenge-hint">Listen. Think. Explain your choice.</span></div>
+    </section>
 
-            <!-- Voting Gallery -->
-            <section class="card p-6 rounded-xl shadow-lg">
-                <h2 class="text-2xl font-bold mb-4 neon-text">3. Voting Gallery</h2>
-                <div class="bg-gray-900 p-4 rounded-lg mb-6">
-                    <h3 class="font-semibold text-teal-300 text-lg mb-2">Voting Criteria</h3>
-                    <p class="text-sm text-gray-400">As you watch each group, consider these points before you vote:</p>
-                    <ul class="list-disc list-inside ml-4 mt-2 text-sm space-y-1">
-                        <li><strong>Correct Grammar:</strong> Did the group use the future tenses correctly?</li>
-                        <li><strong>Variety of Tenses:</strong> Did each member use a *different* future tense?</li>
-                        <li><strong>Creativity & Performance:</strong> Was their story creative and their performance engaging?</li>
-                        <li><strong>Fluency:</strong> Did they speak fluently and confidently?</li>
-                    </ul>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-4 mb-6">
-                    <input type="text" id="group-name-input" placeholder="Enter performing group's name..." class="w-full bg-gray-700 text-white px-4 py-2 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-400">
-                    <button id="add-group-btn" class="btn-primary font-bold py-2 px-6 rounded-lg whitespace-nowrap">Add Group to Gallery</button>
-                </div>
-                <div id="voting-gallery" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Group cards for voting will appear here -->
-                </div>
-                 <div class="mt-6 text-center">
-                    <button id="show-results-btn" class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 px-8 rounded-full text-lg">Show Results</button>
-                </div>
-            </section>
-        </main>
-    </div>
+    <section id="voting" aria-labelledby="voting-title">
+      <div class="section-heading"><div><p class="eyebrow">03 / THE VOTING GALLERY</p><h2 id="voting-title">A future worth listening to.</h2><p>Consider the whole conversation before you vote.</p></div><button class="button secondary" id="show-results-btn">Show results <span aria-hidden="true">↗</span></button></div>
+      <div class="criteria"><span><b>Accuracy</b> Do the forms match the meanings?</span><span><b>Variety</b> Does everyone use a different form?</span><span><b>Creativity</b> Is the project convincing?</span><span><b>Fluency</b> Do they listen and respond?</span></div>
+      <form id="group-form" class="gallery-form"><label for="group-name-input">Team name</label><input id="group-name-input" maxlength="60" placeholder="e.g. Group 1 · Future Makers" autocomplete="off"><button class="button primary" type="submit">Add team</button></form>
+      <div id="voting-gallery" class="voting-grid"></div>
+      <p id="gallery-empty" class="empty-state">Add a team after its performance. The teacher records the class votes here.</p>
+    </section>
+    <footer class="site-footer"><span>UNIT 2 LANGUAGE · THE 2035 VIRTUAL REUNION</span><span>Project scenes are illustrative.</span></footer>
+  </main>
 
-    <!-- Modals -->
-    <div id="role-modal" class="fixed inset-0 modal-backdrop flex items-center justify-center p-4" style="display: none;">
-        <div class="card max-w-md w-full p-8 rounded-2xl relative">
-            <h3 id="role-title" class="text-2xl font-bold neon-text mb-4"></h3>
-            <p id="role-description" class="text-gray-300"></p>
-            <button id="close-role-modal" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-white">&times;</button>
-        </div>
-    </div>
-    <div id="results-modal" class="fixed inset-0 modal-backdrop flex items-center justify-center p-4" style="display: none;">
-        <div class="card max-w-md w-full p-8 rounded-2xl relative text-center">
-            <h2 class="text-3xl font-bold neon-text mb-4">🏆 Results 🏆</h2>
-            <div id="results-content"></div>
-            <button id="close-results-modal" class="mt-6 btn-primary font-bold py-2 px-6 rounded-lg">Close</button>
-        </div>
-    </div>
-
-    <script>
-        const roles = [
-            { title: "Social Media Influencer", description: "You create videos and content online and have millions of followers. You live in New York and love traveling." },
-            { title: "Game Developer", description: "You design characters and stories for a famous video game company. You live in Los Angeles and are starting your own game studio." },
-            { title: "Robotics Technician", description: "You build and repair robots used in everyday life. You work in a big city like Chicago and live with your family." },
-            { title: "Virtual Reality Architect", description: "You design entire virtual worlds for work and entertainment. You live in a high-tech eco-city." },
-            { title: "AI Ethics Consultant", description: "You work with big companies to ensure their artificial intelligence systems are fair and safe for society. You travel the world for conferences." }
-        ];
-
-        const challengeQuestions = [
-            "Looking back from 2045, what is one major project you **will have completed** that you are most proud of?",
-            "In the next 10 years, what new skill **will you be learning** to stay relevant in your field?",
-            "By 2045, how many years **will you have been working** in your profession?",
-            "What is a personal goal (not career-related) that you **will have achieved** by 2045?",
-            "What do you predict **will be** the biggest change in your industry in the next decade?"
-        ];
-
-        let groups = [];
-        const maxGroups = 8;
-
-        const roleAssignmentGrid = document.getElementById('role-assignment-grid');
-        const roleModal = document.getElementById('role-modal');
-        const roleTitle = document.getElementById('role-title');
-        const roleDescription = document.getElementById('role-description');
-        const closeRoleModalBtn = document.getElementById('close-role-modal');
-        
-        const challengeBtn = document.getElementById('challenge-btn');
-        const challengeDisplay = document.getElementById('challenge-question-display');
-
-        const addGroupBtn = document.getElementById('add-group-btn');
-        const groupNameInput = document.getElementById('group-name-input');
-        const votingGallery = document.getElementById('voting-gallery');
-        
-        const showResultsBtn = document.getElementById('show-results-btn');
-        const resultsModal = document.getElementById('results-modal');
-        const resultsContent = document.getElementById('results-content');
-        const closeResultsModalBtn = document.getElementById('close-results-modal');
-
-        // Populate Role Assignment Buttons
-        for(let i = 1; i <= maxGroups; i++) {
-            const btn = document.createElement('button');
-            btn.className = 'btn-primary font-bold py-4 rounded-lg';
-            btn.textContent = `Assign Role: Group ${i}`;
-            btn.onclick = () => assignRole(i);
-            roleAssignmentGrid.appendChild(btn);
-        }
-
-        function assignRole(groupNum) {
-            const randomRole = roles[Math.floor(Math.random() * roles.length)];
-            roleTitle.textContent = `Group ${groupNum}: ${randomRole.title}`;
-            roleDescription.textContent = randomRole.description;
-            roleModal.style.display = 'flex';
-        }
-
-        closeRoleModalBtn.addEventListener('click', () => roleModal.style.display = 'none');
-
-        // Challenge Question Logic
-        challengeBtn.addEventListener('click', () => {
-            const randomQuestion = challengeQuestions[Math.floor(Math.random() * challengeQuestions.length)];
-            challengeDisplay.innerHTML = randomQuestion; // Use innerHTML to render bold tags
-            challengeDisplay.style.display = 'flex';
-        });
-
-        // Add Group to Gallery Logic
-        addGroupBtn.addEventListener('click', () => {
-            const groupName = groupNameInput.value.trim();
-            if (groupName && !groups.find(g => g.name === groupName)) {
-                groups.push({ name: groupName, votes: 0 });
-                groupNameInput.value = '';
-                renderVotingGallery();
-            }
-        });
-
-        function renderVotingGallery() {
-            votingGallery.innerHTML = '';
-            groups.forEach((group, index) => {
-                const card = document.createElement('div');
-                card.className = 'card p-4 rounded-lg';
-                card.innerHTML = `
-                    <h3 class="text-xl font-bold">${group.name}</h3>
-                    <div class="flex justify-between items-center mt-4">
-                        <span class="text-lg font-bold">${group.votes} Votes</span>
-                        <button class="btn-primary font-semibold py-1 px-4 rounded-full" onclick="voteForGroup(${index})">Vote</button>
-                    </div>
-                `;
-                votingGallery.appendChild(card);
-            });
-        }
-
-        function voteForGroup(index) {
-            groups[index].votes++;
-            renderVotingGallery();
-        }
-
-        // Results Modal Logic
-        showResultsBtn.addEventListener('click', () => {
-            if (groups.length === 0) return;
-            const winner = groups.reduce((prev, current) => (prev.votes > current.votes) ? prev : current);
-            resultsContent.innerHTML = `<p class="text-xl">The winner is...</p><p class="text-4xl font-bold my-4 neon-text">${winner.name}</p><p class="text-xl">with ${winner.votes} votes!</p>`;
-            resultsModal.style.display = 'flex';
-        });
-        
-        closeResultsModalBtn.addEventListener('click', () => resultsModal.style.display = 'none');
-
-    </script>
-
+  <dialog id="role-modal" aria-labelledby="role-title">
+    <div class="brief-shell"><button class="close-button" id="close-role-modal" aria-label="Close group brief">×</button><div id="role-content"></div></div>
+  </dialog>
+  <dialog id="results-modal" aria-labelledby="results-title"><div class="small-dialog"><p class="eyebrow">THE CLASS HAS SPOKEN</p><h2 id="results-title">Reunion results</h2><div id="results-content"></div><button class="button primary" id="close-results-modal">Back to the gallery</button></div></dialog>
+  <dialog id="reset-modal" aria-labelledby="reset-title"><div class="small-dialog"><p class="eyebrow">A FRESH START</p><h2 id="reset-title">Start a new class?</h2><p>This clears the current group roles, project choices and votes on this device. The next class can reveal a new set.</p><div class="dialog-actions"><button class="button secondary" id="cancel-reset">Keep this class</button><button class="button primary" id="confirm-reset">Start new class</button></div></div></dialog>
+  <div id="notice" class="notice" role="status" aria-live="polite"></div>
 </body>
 </html>
-
